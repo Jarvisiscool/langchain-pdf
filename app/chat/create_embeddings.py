@@ -12,4 +12,4 @@ def create_embeddings_for_pdf(pdf_id: str, pdf_path: str):
     docs = loader.load_and_split(text_splitter)
     
     
-    print(docs)
+    vector_store.add_documents(docs)
