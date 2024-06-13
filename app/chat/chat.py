@@ -29,7 +29,8 @@ def build_chat(chat_args: ChatArgs):
         chat_args
     )
     llm_name, llm = select_component("llm", llm_map, chat_args)
-    memory_name, memory = select_component("memory", memory_app, chat_args)
+    memory_name, memory = select_component("memory", memory_map, chat_args)
+    memory_name, memory = select_component("memory", memory_map, chat_args)
     
     print(f"Running chain with: memory: {memory_name}, llm: {llm_name}, retriever: {retriever_name}" )
     
