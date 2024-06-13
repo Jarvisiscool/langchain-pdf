@@ -1,3 +1,4 @@
+import random
 from langchain.chat_models import ChatOpenAI
 from app.chat.models import ChatArgs
 from app.chat.vector_stores import retriever_map
@@ -13,7 +14,7 @@ def select_component(component_type, component_map, chat_args):
     previous_component = components[component_type]
     
     if previous_component:
-        builder = component_map(previous_component)
+        builder = component_map[previous_component]
         return previous_component, builder(chat_args)
     else:
         random_name = random.choice(list(component_map.keys()))
@@ -29,6 +30,8 @@ def build_chat(chat_args: ChatArgs):
     )
     llm_name, llm = select_component("llm", llm_map, chat_args)
     memory_name, memory = select_component("memory", memory_app, chat_args)
+    
+    print(f"Running chain with: memory: {memory_name}, llm: {llm_name}, retriever: {retriever_name}" )
     
     set_conversation_components(chat_args.conversation_id, llm=llm_name, retriever= retriever_name, memory= memory_name)
 
