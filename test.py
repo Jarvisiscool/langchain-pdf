@@ -1,14 +1,18 @@
-from langchain.chat_models import ChatOpenAI 
+from langchain_community.chat_models import ChatOpenAI 
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain.callbacks.base import BaseCallbackHandler
 from dotenv import load_dotenv
+from queue import Queue
+from threading import Thread
 
 load_dotenv()
 
+queue = Queue()
+
 class StreamingHandler(BaseCallbackHandler):
     def on_llm_new_token(self, token, **kwagrs):
-        print(token)
+        queue.put(token)
 
 
 chat = ChatOpenAI(streaming=True, callbacks=[StreamingHandler()])
@@ -19,11 +23,18 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-chain = LLMChain(chat=chat, prompt=prompt)
-output = chain("tell me a joke")
-print(output)
+class StreamingChain(LLMChain):
+    def stream(self, input):
+        def task():
+            self(input)
+        
+        Thread(target=task).start()
+        
+        while True:
+            token= queue.get()
+            yield token
 
-messages = prompt.format_messages(content="tell me a joke")
+chain = StreamingChain(llm=chat, prompt=prompt)
 
-for message in chat.stream(messages):
-    print(message.content)
+for output in chain.stream(input={"content":"tell me a joke"}):
+    print(output)
