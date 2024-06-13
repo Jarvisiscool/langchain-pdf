@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-chat = ChatOpenAI()
+chat = ChatOpenAI(streaming=True)
 
 prompt = ChatPromptTemplate.from_messages(
     [
@@ -14,5 +14,5 @@ prompt = ChatPromptTemplate.from_messages(
 
 messages = prompt.format_messages(content="tell me a joke")
 
-output = chat(messages)
+output = chat.stream(messages)
 print(output)
