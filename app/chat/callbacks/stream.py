@@ -4,7 +4,7 @@ class StreamingHandler(BaseCallbackHandler):
     def __init__(self, queue):
         self.queue = queue
     
-    def on_llm_new_token(self, token, **kwagrs):
+    def on_llm_new_token(self, token, **kwargs):
         self.queue.put(token)
     
     def on_llm_end(self, response, **kwargs):
