@@ -1,4 +1,4 @@
-from langfuse.models import CreateTrace
+from langfuse.model import CreateTrace
 from app.chat.tracing.langfuse import langfuse
 
 class TraceableChain:
