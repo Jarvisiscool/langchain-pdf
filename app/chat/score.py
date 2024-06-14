@@ -60,7 +60,7 @@ def get_scores():
         counts = client.hgetall(f"{component_type}_score_counts")
         
         names = values.keys()
-        for name in names():
+        for name in names:
             score = int(values.get(name, 1))
             count = int(counts.get(name, 1))
             avg = score / count
