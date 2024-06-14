@@ -7,6 +7,8 @@ from app.chat.llm import llm_map
 from app.chat.memories import memory_map
 from app.chat.chains.retrieval import StreamingConversationalRetrievalChain
 from app.web.api import (set_conversation_components, get_conversation_components)
+from app.chat.tracing.langfuse import langfuse
+from langfuse.model import CreateTrace
 
 
 
@@ -36,10 +38,18 @@ def build_chat(chat_args: ChatArgs):
     set_conversation_components(chat_args.conversation_id, llm=llm_name, retriever= retriever_name, memory= memory_name)
 
     condense_question_llm = ChatOpenAI(streaming=False)
+    
+    trace = langfuse.trace(
+        CreateTrace(
+            id=chat_args.conversation_id,
+            metadata = chat_args.metadata
+        )
+    )
 
     return StreamingConversationalRetrievalChain.from_llm(
         llm=llm,
         condense_question_llm=condense_question_llm,
         memory=memory,
-        retriever=retriever
+        retriever=retriever,
+        callbacks=[trace.getNewHandler()]
     )
