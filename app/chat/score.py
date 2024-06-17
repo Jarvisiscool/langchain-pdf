@@ -26,9 +26,13 @@ def random_component_by_score(component_type, component_map):
         avg_scores[name] = max(avg, 0.1)
     
     #Do a weighted random selection
+    #sum all the avg scores 
     sum_scores = sum(avg_scores.values())
+    #pick a random number from 0 to the sum_scores
     random_val = random.uniform(0,sum_scores)
     cummulative = 0
+    #pick up each score from avg_scores and add it into cummulative
+    #If the scores for the random_val is less than cummulative use that component; return name
     for name, score in avg_scores.items():
         cummulative += score
         if random_val <= cummulative:
