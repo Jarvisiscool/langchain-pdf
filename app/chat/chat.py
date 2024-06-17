@@ -19,6 +19,7 @@ def select_component(component_type, component_map, chat_args):
         return previous_component, builder(chat_args)
     else:
         #first message; need to pick a random llm, memory, retriever
+        #Gives a weighted randomness for component_type
         random_name = random_component_by_score(component_type, component_map)
         builder = component_map[random_name]
         return random_name, builder(chat_args)
