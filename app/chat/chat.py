@@ -35,7 +35,7 @@ def build_chat(chat_args: ChatArgs):
     memory_name, memory = select_component("memory", memory_map, chat_args)
     memory_name, memory = select_component("memory", memory_map, chat_args)
     
-    set_conversation_components(chat_args.conversation_id, llm=llm_name, retriever= retriever_name, memory= memory_name)
+    set_conversation_components(chat_args.conversation_id, llm=llm_name, retriever=retriever_name, memory=memory_name)
 
     condense_question_llm = ChatOpenAI(streaming=False)
 
