@@ -26,6 +26,7 @@ def select_component(component_type, component_map, chat_args):
 #define a function, use retriever, customize retriever, then creates a custom memory
 #ConversationBufferMemory stores the data in a plain list, modifies the input and output variables
 #ConversationSummaryMemory which summarized the data and outputs the summary
+#creates retriever, memory, and llm, which will then use StreamingConversationalRetrievalChain to retrieve the needed text output the answer using the llm and store the answer in a SqlMemory  
 def build_chat(chat_args: ChatArgs):
     retriever_name, retriever = select_component(
         "retriever",

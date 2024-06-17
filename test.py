@@ -8,7 +8,7 @@ from threading import Thread
 
 load_dotenv()
 
-
+#Find out how to work the streaming for the website using StreamingHandler
 class StreamingHandler(BaseCallbackHandler):
     def __init__(self, queue):
         self.queue = queue
