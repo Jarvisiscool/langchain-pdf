@@ -1,5 +1,6 @@
 from langchain.callbacks.base import BaseCallbackHandler
 
+#queue's the text from the AI and helps the StreamableChain give a good user experience
 class StreamingHandler(BaseCallbackHandler):
     def __init__(self, queue):
         self.queue = queue

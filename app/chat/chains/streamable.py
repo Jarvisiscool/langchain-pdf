@@ -3,6 +3,7 @@ from queue import Queue
 from threading import Thread
 from app.chat.callbacks.stream import StreamingHandler
 
+#Allows us to stream the words to the user and provides a good user experience instead of making the user wait
 class StreamableChain:
     def stream(self, input):
         queue = Queue()

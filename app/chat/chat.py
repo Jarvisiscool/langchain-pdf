@@ -10,7 +10,7 @@ from app.web.api import (set_conversation_components, get_conversation_component
 
 
 
-
+#
 def select_component(component_type, component_map, chat_args):
     components = get_conversation_components(chat_args.conversation_id)
     previous_component = components[component_type]
@@ -23,7 +23,9 @@ def select_component(component_type, component_map, chat_args):
         builder = component_map[random_name]
         return random_name, builder(chat_args)
     
-
+#define a function, use retriever, customize retriever, then creates a custom memory
+#ConversationBufferMemory stores the data in a plain list, modifies the input and output variables
+#ConversationSummaryMemory which summarized the data and outputs the summary
 def build_chat(chat_args: ChatArgs):
     retriever_name, retriever = select_component(
         "retriever",

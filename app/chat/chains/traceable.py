@@ -1,6 +1,7 @@
 from langfuse.model import CreateTrace
 from app.chat.tracing.langfuse import langfuse
 
+#Help see how the program is actually running using LangFuse
 class TraceableChain:
     def __call__(self, *args, **kwargs):
         trace = langfuse.trace(
