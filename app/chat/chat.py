@@ -14,11 +14,11 @@ def select_component(component_type, component_map, chat_args):
     previous_component = components[component_type]
     
     if previous_component:
-        #NOT first message need to use the same retriever
+        #NOT first message need to use the same llm, memory, retriever
         builder = component_map[previous_component]
         return previous_component, builder(chat_args)
     else:
-        #first message; need to pick a random retriever
+        #first message; need to pick a random llm, memory, retriever
         random_name = random_component_by_score(component_type, component_map)
         builder = component_map[random_name]
         return random_name, builder(chat_args)
@@ -29,14 +29,10 @@ def select_component(component_type, component_map, chat_args):
 #creates retriever, memory, and llm, which will then use StreamingConversationalRetrievalChain to retrieve the needed text output the answer using the llm and store the answer in a SqlMemory  
 #Builds and returns the StreamingConversationalRetrievalChain, it supports streaming, and creates random variations of retriever, memory, and llm model
 def build_chat(chat_args: ChatArgs):
-    retriever_name, retriever = select_component(
-        "retriever",
-        retriever_map,
-        chat_args
-    )
+    retriever_name, retriever = select_component("retriever", retriever_map, chat_args)
     llm_name, llm = select_component("llm", llm_map, chat_args)
     memory_name, memory = select_component("memory", memory_map, chat_args)
-    memory_name, memory = select_component("memory", memory_map, chat_args)
+    
     
     set_conversation_components(chat_args.conversation_id, llm=llm_name, retriever= retriever_name, memory= memory_name)
 
