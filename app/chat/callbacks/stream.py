@@ -1,17 +1,22 @@
 from langchain.callbacks.base import BaseCallbackHandler
 
-#Find out how to work the streaming for the website using StreamingHandler and a universal class called StreamableChain
-#sends tokens to a queue whihc will then go to StreamableChain
+#queue's the text from the AI and helps the StreamableChain give a good user experience
 class StreamingHandler(BaseCallbackHandler):
     def __init__(self, queue):
         self.queue = queue
-    #Sends in the chuncks of text
-    def on_llm_new_token(self, token, **kwagrs):
-        self.queue.put(token)
+        self.streaming_run_ids = set()
     
-    #stops the loop and queue
-    def on_llm_end(self, response, **kwargs):
-        self.queue.put(None)
-    #if there is an error it will send None to stop the loop    
+    def on_chat_model_start(self, serialized, messages, run_id, **kwargs):
+        if serialized["kwargs"]["streaming"]:
+            self.streaming_run_ids.add(run_id)
+    
+    def on_llm_new_token(self, token, **kwargs):
+        self.queue.put(token)
+
+    def on_llm_end(self, response, run_id, **kwargs):
+        if run_id in self.streaming_run_ids:
+            self.queue.put(None)
+            self.streaming_run_ids.remove(run_id)
+
     def on_llm_error(self, error, **kwargs):
         self.queue.put(None)
