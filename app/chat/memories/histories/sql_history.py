@@ -9,6 +9,7 @@ from app.web.api import (
 #SqlMessageHistory that makes use of conversation_id/chat_memory, SqlMessageHistory is a class that takes messages and stores them in a list. Responsible for persisting and retrieving messages. 
 #get_messages_by_converation_id() gets messages tied to a conversation
 #add_messages_by_conversation adds a single message
+#Allows us to use ConversationBufferMemory and ConversationWindowBufferMemory
 class SqlMessageHistory(BaseChatMessageHistory, BaseModel):
     conversation_id: str
     
