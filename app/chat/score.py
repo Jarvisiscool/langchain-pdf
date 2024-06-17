@@ -33,6 +33,7 @@ def random_component_by_score(component_type, component_map):
     cummulative = 0
     #pick up each score from avg_scores and add it into cummulative
     #If the scores for the random_val is less than cummulative use that component; return name
+    #higher score for the component higher chance of being picked
     for name, score in avg_scores.items():
         cummulative += score
         if random_val <= cummulative:
