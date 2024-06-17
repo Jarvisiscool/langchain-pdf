@@ -2,7 +2,7 @@ from langchain.chains import ConversationalRetrievalChain
 from app.chat.chains.streamable import StreamableChain
 from app.chat.chains.traceable import TraceableChain
 
-#Gives the ability to stream the text to the user
+#Class that takes all the functions from StreamableChain and ConversationalChain in order to override the streaming function
 class StreamingConversationalRetrievalChain(
     TraceableChain, StreamableChain, ConversationalRetrievalChain
 ):
