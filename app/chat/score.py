@@ -65,6 +65,7 @@ def get_scores():
             score = int(values.get(name, 1))
             count = int(counts.get(name, 1))
             avg = score / count
+            #updates the component_type at whatever name is, puts it into a list that calculates one number with the avg
             aggergate[component_type][name] = [avg]
     
     return aggergate
