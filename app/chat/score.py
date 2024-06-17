@@ -39,7 +39,8 @@ def score_conversation(
     conversation_id: str, score: float, llm: str, retriever: str, memory: str
 ) -> None:
     score = min(max(score, 0), 1)
-    #Stores data at the particular hashes
+    #Stores data at the particular hashes, increments the number stored at particular hash by score 
+    #Sets dictionary, look at key of either llm, memory, or retriever, then the score
     client.hincrby("llm_score_values", llm, score)
     client.hincrby("llm_score_counts", llm, 1)
     
