@@ -9,8 +9,6 @@ from app.chat.chains.retrieval import StreamingConversationalRetrievalChain
 from app.web.api import (set_conversation_components, get_conversation_components)
 
 
-
-#
 def select_component(component_type, component_map, chat_args):
     components = get_conversation_components(chat_args.conversation_id)
     previous_component = components[component_type]
