@@ -6,7 +6,7 @@ class StreamingHandler(BaseCallbackHandler):
         self.queue = queue
         self.streaming_run_ids = set()
     
-    #Tells the StreamingHandler to not listen to ChatOpenAI in chat.py and listen to only the model in chatopenai.py
+    #Tells the StreamingHandler to not listen to ChatOpenAI in chat.py and listen to only the model that has streaming=True
     def on_chat_model_start(self, serialized, messages, run_id, **kwargs):
         if serialized["kwargs"]["streaming"]:
             self.streaming_run_ids.add(run_id)
