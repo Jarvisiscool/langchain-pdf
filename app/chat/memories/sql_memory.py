@@ -1,3 +1,4 @@
+#ConversationBufferMemory stores all messages of the conversation
 from langchain.memory import ConversationBufferMemory
 from app.chat.memories.histories.sql_history import SqlMessageHistory
 
