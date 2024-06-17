@@ -54,6 +54,7 @@ def score_conversation(
 def get_scores():
     #summary of all scores
     #displays the scores in the scores tab of the website
+    #stores all the avgerages into a dictionary called aggregate
     aggergate = {"llm": {}, "memory": {}, "retriever": {}}
     
     for component_type in aggergate.keys():
