@@ -14,9 +14,11 @@ def select_component(component_type, component_map, chat_args):
     previous_component = components[component_type]
     
     if previous_component:
+        #NOT first message need to use the same retriever
         builder = component_map[previous_component]
         return previous_component, builder(chat_args)
     else:
+        #first message; need to pick a random retriever
         random_name = random_component_by_score(component_type, component_map)
         builder = component_map[random_name]
         return random_name, builder(chat_args)
