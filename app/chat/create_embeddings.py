@@ -7,7 +7,7 @@ from app.chat.vector_stores.pinecone import vector_store
 #Updates the metadata of the document/ text chunks
 def create_embeddings_for_pdf(pdf_id: str, pdf_path: str):
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=400,
+        chunk_size=500,
         chunk_overlap=100
     )
     
