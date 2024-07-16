@@ -1,4 +1,4 @@
-from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 
 #Instance of ChatOpenAI that has streaming and name of the model you want to use
 def build_llm(chat_args, model_name):
