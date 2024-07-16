@@ -9,7 +9,7 @@ pinecone.Pinecone(
     environment=os.getenv("PINECONE_ENV_NAME")
 )
 
-vector_store = Pinecone.from_existing_index(
+vector_store = Pinecone.afrom_documents(
     os.getenv("PINECONE_INDEX_NAME"), embeddings
 )
 
