@@ -1,5 +1,5 @@
 from langchain.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from app.chat.vector_stores.pinecone import vector_store
 
 #Creates embeddings for each of the splits of the pdf, with an ID to label the chunks of text
