@@ -3,7 +3,7 @@ from invoke import task
 
 
 @task
-def dev1(ctx):
+def dev(ctx):
     ctx.run(
         "flask --app app.web run --debug --port 8000",
         pty=os.name != "nt",
