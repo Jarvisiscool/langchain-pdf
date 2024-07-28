@@ -1,26 +1,32 @@
-from langchain_community.document_loaders import PyPDFLoader
+from vectore_store.pinecone import vector_store
+from langchain_text_splitters import MarkdownHeaderTextSplitter
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from app.chat.vector_stores.pinecone import vector_store
 
-#Creates embeddings for each of the splits of the pdf, with an ID to label the chunks of text
-#Adds documents to the pinecone vectordatabase with a pdf_id
-#Updates the metadata of the document/ text chunks
-def create_embeddings_for_pdf(pdf_id: str, pdf_path: str):
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=100
+def create_embeddings_for_md(raw_data, md_id: str, md_path: str):
+    markdown_document = raw_data
+    
+    headers_to_split_on = [
+        ("#", "Header 1"),
+        ("##", "Header 2"),
+    ]
+    markdown_splitter = MarkdownHeaderTextSplitter(
+            headers_to_split_on=headers_to_split_on, strip_headers=False
     )
     
-    loader = PyPDFLoader(pdf_path)
-    docs = loader.load_and_split(text_splitter)
+    md_header_splits = markdown_splitter.split_text(markdown_document)
     
-    
-    for doc in docs:
-        doc.metadata = {
-            "page":doc.metadata["page"],
-            "text":doc.page_content,
-            "pdf_id": pdf_id
+    chunk_size = 250
+    chunk_overlap = 30
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size, chunk_overlap=chunk_overlap
+    )
+    splits = text_splitter.split_documents(md_header_splits)
+
+    for split in splits:
+        split.metadata = {
+            "page":split.metadata["page"],
+            "text":split.page_content,
+            "md_id": md_id
         }
     
-    vector_store.add_documents(docs)
-    
+    vector_store.add_documents(splits)

@@ -6,4 +6,3 @@ langfuse = Langfuse(
     os.environ["LANGFUSE_SECRET_KEY"],
     host="https://us.cloud.langfuse.com/"
 )
-
